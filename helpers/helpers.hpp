@@ -16,6 +16,7 @@
 #include <unordered_set>
 #include <chrono>
 #include <thread>
+#include <regex>
 
 
 
@@ -251,4 +252,39 @@ std::vector<char *> split_string(char * str, char sep)
         str++;
     }
     return ret;
+}
+
+
+
+
+template<typename T>
+struct Point2
+{
+    T x;
+    T y;
+    Point2() {}
+    Point2(T x_, T y_) : x(x_), y(y_) {}
+    std::vector<Point2<T>> get_orthogonal()
+    {
+        std::vector<Point2<T>> ret;
+        ret.push_back(Point2<T>(-y,  x));
+        ret.push_back(Point2<T>( y, -x));
+        return ret;
+    }
+};
+
+template<typename T>
+Point2<T> operator+(Point2<T> p1, Point2<T> p2)
+{
+    return Point2(p1.x + p2.x, p1.y + p2.y);
+}
+template<typename T>
+Point2<T> operator-(Point2<T> p1, Point2<T> p2)
+{
+    return Point2(p1.x - p2.x, p1.y - p2.y);
+}
+template<typename T>
+Point2<T> operator-(Point2<T> p)
+{
+    return Point2(-p.x, -p.y);
 }
