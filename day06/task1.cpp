@@ -4,6 +4,9 @@
 
 int main()
 {
+    timer tm;
+    tm.start();
+
     std::vector<std::string> lines_orig = read_lines();
     int h = lines_orig.size();
     int w = lines_orig[0].size();
@@ -62,6 +65,9 @@ int main()
     }
 
     printf("%d\n", count);
+
+    tm.stop();
+    printf("Time: %.3f ms\n", tm.get_time_ms());
 
     return 0;
 }

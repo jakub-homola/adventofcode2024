@@ -314,3 +314,28 @@ char dir_to_char(direction dir)
         default: return '_';
     }
 }
+
+class timer
+{
+private:
+    static constexpr double ticks_to_sec = ((double)std::chrono::steady_clock::period::num) / std::chrono::steady_clock::period::den; // duration of one tick
+    std::chrono::steady_clock::time_point start_point;
+    long long ticks = 0;
+public:
+    void start()
+    {
+        start_point = std::chrono::steady_clock::now();
+    }
+    void stop()
+    {
+        ticks = (std::chrono::steady_clock::now() - start_point).count();
+    }
+    double get_time_s()
+    {
+        return ticks * ticks_to_sec;
+    }
+    double get_time_ms()
+    {
+        return get_time_s() * 1000.0;
+    }
+};
