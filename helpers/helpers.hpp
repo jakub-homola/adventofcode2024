@@ -288,3 +288,29 @@ Point2<T> operator-(Point2<T> p)
 {
     return Point2(-p.x, -p.y);
 }
+
+
+
+Point2<int> dir_to_point_int(direction dir)
+{
+    switch(dir.val)
+    {
+        case directions::north: return Point2<int>(0,-1);
+        case directions::east:  return Point2<int>(1,0);
+        case directions::south: return Point2<int>(0,1);
+        case directions::west:  return Point2<int>(-1,0);
+        default: return Point2<int>(0,0);
+    }
+}
+
+char dir_to_char(direction dir)
+{
+    switch(dir.val)
+    {
+        case directions::north: return '^';
+        case directions::east:  return '>';
+        case directions::south: return 'V';
+        case directions::west:  return '<';
+        default: return '_';
+    }
+}
