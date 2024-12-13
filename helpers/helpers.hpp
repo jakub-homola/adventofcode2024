@@ -264,6 +264,8 @@ struct Point2
     T y;
     Point2() {}
     Point2(T x_, T y_) : x(x_), y(y_) {}
+    Point2(const Point2<T> & p) : Point2(p.x, p.y) {}
+    Point2(Point2<T> && p) : Point2(p.x, p.y) {}
     std::vector<Point2<T>> get_orthogonal()
     {
         std::vector<Point2<T>> ret;
@@ -288,6 +290,66 @@ Point2<T> operator-(Point2<T> p)
 {
     return Point2(-p.x, -p.y);
 }
+template<typename T>
+bool operator<(const Point2<T> & l, const Point2<T> & r)
+{
+    if(l.y < r.y) return true;
+    return l.x < r.x;
+}
+template<typename T>
+bool operator==(const Point2<T> & l, const Point2<T> & r)
+{
+    return (l.x == r.x) && (l.y == r.y);
+}
+template<typename T>
+bool operator!=(const Point2<T> & l, const Point2<T> & r)
+{
+    return (l.x != r.x) || (l.y != r.y);
+}
+
+
+
+template<typename T>
+struct Loc2
+{
+    T r;
+    T c;
+    Loc2() {}
+    Loc2(T r_, T c_) : r(r_), c(c_) {}
+    Loc2(const Loc2<T> & p) : Loc2(p.r, p.c) {}
+    Loc2(Loc2<T> && p) : Loc2(p.r, p.c) {}
+};
+template<typename T>
+Loc2<T> operator+(Loc2<T> p1, Loc2<T> p2)
+{
+    return Loc2(p1.r + p2.r, p1.c + p2.c);
+}
+template<typename T>
+Loc2<T> operator-(Loc2<T> p1, Loc2<T> p2)
+{
+    return Loc2(p1.r - p2.r, p1.c - p2.c);
+}
+template<typename T>
+Loc2<T> operator-(Loc2<T> p)
+{
+    return Loc2(-p.r, -p.c);
+}
+template<typename T>
+bool operator<(const Loc2<T> & l, const Loc2<T> & r)
+{
+    if(l.r < r.r) return true;
+    return l.c < r.c;
+}
+template<typename T>
+bool operator==(const Loc2<T> & l, const Loc2<T> & r)
+{
+    return (l.r == r.r) && (l.c == r.c);
+}
+template<typename T>
+bool operator!=(const Loc2<T> & l, const Loc2<T> & r)
+{
+    return (l.r != r.r) || (l.c != r.c);
+}
 
 
 
@@ -300,6 +362,18 @@ Point2<int> dir_to_point_int(direction dir)
         case directions::south: return Point2<int>(0,1);
         case directions::west:  return Point2<int>(-1,0);
         default: return Point2<int>(0,0);
+    }
+}
+
+Loc2<int> dir_to_loc_int(direction dir)
+{
+    switch(dir.val)
+    {
+        case directions::north: return Loc2<int>(-1,0);
+        case directions::east:  return Loc2<int>(0,1);
+        case directions::south: return Loc2<int>(1,0);
+        case directions::west:  return Loc2<int>(0,-1);
+        default: return Loc2<int>(0,0);
     }
 }
 
@@ -339,3 +413,16 @@ public:
         return get_time_s() * 1000.0;
     }
 };
+
+std::vector<std::string> grid_pad(std::vector<std::string> & in, char c, int ps = 1)
+{
+    std::vector<std::string> ret(in.size() + 2 * ps, std::string(in[0].size() + 2 * ps, c));
+    for(int r = 0; r < in.size(); r++)
+    {
+        for(int c = 0; c < in[r].size(); c++)
+        {
+            ret[r+ps][c+ps] = in[r][c];
+        }
+    }
+    return ret;
+}

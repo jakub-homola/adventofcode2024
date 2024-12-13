@@ -1,0 +1,2 @@
+g++ -g -O2 task1.cpp -o task1.x
+Makefile:14: recipe for target 'task1.x' failed
