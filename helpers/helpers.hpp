@@ -257,7 +257,7 @@ std::vector<char *> split_string(char * str, char sep)
 
 
 
-template<typename T>
+template<typename T = int>
 struct Point2
 {
     T x;
@@ -266,6 +266,8 @@ struct Point2
     Point2(T x_, T y_) : x(x_), y(y_) {}
     Point2(const Point2<T> & p) : Point2(p.x, p.y) {}
     Point2(Point2<T> && p) : Point2(p.x, p.y) {}
+    Point2<T> & operator=(const Point2<T> & p) { x = p.x; y = p.y; return *this; }
+    Point2<T> & operator=(Point2<T> && p) { x = p.x; y = p.y; return *this; }
     std::vector<Point2<T>> get_orthogonal()
     {
         std::vector<Point2<T>> ret;
@@ -291,6 +293,11 @@ Point2<T> operator-(Point2<T> p)
     return Point2(-p.x, -p.y);
 }
 template<typename T>
+Point2<T> operator*(int a, Point2<T> p)
+{
+    return Point2(a * p.x, a * p.y);
+}
+template<typename T>
 bool operator<(const Point2<T> & l, const Point2<T> & r)
 {
     if(l.y < r.y) return true;
@@ -309,7 +316,7 @@ bool operator!=(const Point2<T> & l, const Point2<T> & r)
 
 
 
-template<typename T>
+template<typename T = int>
 struct Loc2
 {
     T r;
@@ -318,6 +325,8 @@ struct Loc2
     Loc2(T r_, T c_) : r(r_), c(c_) {}
     Loc2(const Loc2<T> & p) : Loc2(p.r, p.c) {}
     Loc2(Loc2<T> && p) : Loc2(p.r, p.c) {}
+    Loc2<T> & operator=(const Loc2<T> & p) { r = p.r; c = p.c; return *this; }
+    Loc2<T> & operator=(Loc2<T> && p) { r = p.r; c = p.c; return *this; }
 };
 template<typename T>
 Loc2<T> operator+(Loc2<T> p1, Loc2<T> p2)
