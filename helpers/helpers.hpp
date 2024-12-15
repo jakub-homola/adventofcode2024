@@ -236,6 +236,28 @@ struct directions
             default: return directions::none;
         }
     }
+    constexpr static bool is_horizontal(direction dir)
+    {
+        switch(dir)
+        {
+            case directions::east:
+            case directions::west:
+                return true;
+            default:
+                return false;
+        }
+    }
+    constexpr static bool is_vertical(direction dir)
+    {
+        switch(dir)
+        {
+            case directions::north:
+            case directions::south:
+                return true;
+            default:
+                return false;
+        }
+    }
 };
 
 
@@ -342,6 +364,11 @@ template<typename T>
 Loc2<T> operator-(Loc2<T> p)
 {
     return Loc2(-p.r, -p.c);
+}
+template<typename T>
+Loc2<T> operator*(T s, Loc2<T> p)
+{
+    return Loc2(s * p.r, s * p.c);
 }
 template<typename T>
 bool operator<(const Loc2<T> & l, const Loc2<T> & r)
