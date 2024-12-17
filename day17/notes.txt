@@ -1,0 +1,54 @@
+
+
+2 4   :   B = A & 7
+1 1   :   B = B ^ 1
+7 5   :   C = A >> B
+4 6   :   B = B ^ C
+0 3   :   A = A >> 3
+1 4   :   B = B ^ 4
+5 5   :   out B & 7
+3 0   :   goto start
+
+C used only once
+
+2 4   :   B = A & 7
+1 1   :   B = B ^ 1
+4 6   :   B = B ^ (A >> B)
+0 3   :   A = A >> 3
+1 4   :   B = B ^ 4
+5 5   :   out B & 7
+3 0   :   goto start
+
+B is only output or changing itself
+
+reduce B usage
+
+1 1   :   B = (A & 7) ^ 1
+4 6   :   B = B ^ (A >> B)
+0 3   :   A = A >> 3
+1 4   :   B = B ^ 4
+5 5   :   out B & 7
+3 0   :   goto start
+
+reduce B usage
+
+4 6   :   B = (A & 7) ^ 1 ^ (A >> ((A & 7) ^ 1))
+0 3   :   A = A >> 3
+1 4   :   B = B ^ 4
+5 5   :   out B & 7
+3 0   :   goto start
+
+reorder
+
+4 6   :   B = (A & 7) ^ 1 ^ (A >> ((A & 7) ^ 1))
+1 4   :   B = B ^ 4
+5 5   :   out B & 7
+0 3   :   A = A >> 3
+3 0   :   goto start
+
+reduce B usage
+
+1 4   :   B = (A & 7) ^ 5 ^ (A >> ((A & 7) ^ 1))
+5 5   :   out B & 7
+0 3   :   A = A >> 3
+3 0   :   goto start
