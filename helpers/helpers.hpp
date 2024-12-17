@@ -8,6 +8,7 @@
 #include <cstring>
 #include <algorithm>
 #include <cmath>
+#include <queue>
 #include <deque>
 #include <numeric>
 #include <map>
