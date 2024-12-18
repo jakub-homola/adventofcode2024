@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <array>
 #include <vector>
+#include <list>
 #include <string>
 #include <cstring>
 #include <algorithm>
@@ -451,7 +452,7 @@ public:
     }
 };
 
-std::vector<std::string> grid_pad(std::vector<std::string> & in, char c, int ps = 1)
+std::vector<std::string> grid_pad(const std::vector<std::string> & in, char c, int ps = 1)
 {
     std::vector<std::string> ret(in.size() + 2 * ps, std::string(in[0].size() + 2 * ps, c));
     for(int r = 0; r < in.size(); r++)
