@@ -11,12 +11,13 @@ struct path
 
 
 
-int main()
+int main(int argc, char ** argv)
 {
     timer tm;
     tm.start();
 
     int size = 71;
+    if(argc > 1) size = atoi(argv[1]);
     int count = 1024;
 
     std::vector<std::string> lines = read_lines();
